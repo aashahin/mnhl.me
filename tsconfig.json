@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "strict": true,
+        "skipLibCheck": true,
+        "lib": [
+            "ESNext"
+        ],
+        "types": [
+            "@cloudflare/workers-types"
+        ],
+        "jsx": "preserve",
+        "noEmit": true,
+        "isolatedModules": true,
+        "allowJs": true,
+        "checkJs": false,
+        "moduleDetection": "force",
+        "resolveJsonModule": true,
+        "noUncheckedIndexedAccess": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts"
+    ]
+}

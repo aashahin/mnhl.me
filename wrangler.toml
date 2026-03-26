@@ -1,0 +1,43 @@
+name = "mnhl-me"
+main = "src/index.ts"
+compatibility_date = "2026-03-01"
+
+# 1. KV Namespace (Cache)
+[[kv_namespaces]]
+binding = "LINKS_KV"
+id = "#" # Replace with actual KV namespace ID after creation, e.g., "1234567890abcdef1234567890abcdef"
+
+# 2. D1 Database (Storage)
+[[d1_databases]]
+binding = "DB"
+database_name = "mnhl_shorteener"
+database_id = "#" # Replace with actual D1 database ID after creation, e.g., "66bb3cad-28e0-4e74-b3e8-98e938cefea0"
+
+# 3. Queue (Analytics Buffer)
+[[queues.producers]]
+queue = "link-analytics"
+binding = "ANALYTICS_QUEUE"
+
+[[queues.consumers]]
+queue = "link-analytics"
+max_batch_size = 50 # Write to DB in batches of 50
+max_batch_timeout = 5 # Or every 5 seconds
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1
+
+[vars]
+# SECURITY WARNING: Do NOT store secrets here. 
+# Run: npx wrangler secret put HMAC_SECRET
