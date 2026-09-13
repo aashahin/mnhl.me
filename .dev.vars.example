@@ -1,0 +1,3 @@
+# Local development only. Production secrets are supplied through private rotation files.
+HMAC_SECRET=replace-with-a-local-development-key
+# HMAC_PREVIOUS_SECRET=previous-key-during-an-approved-transition

@@ -9,6 +9,8 @@ export type Bindings = {
   ANALYTICS_QUEUE: Queue<AnalyticsEvent>;
   DB: D1Database;
   HMAC_SECRET: string;
+  /** Temporary overlap until existing callers use the replacement key. */
+  HMAC_PREVIOUS_SECRET?: string;
 };
 
 export type Variables = {

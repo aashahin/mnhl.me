@@ -32,3 +32,8 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# Private Wrangler bindings
+.dev.vars
+.dev.vars.*
+!.dev.vars.example

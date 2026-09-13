@@ -1,17 +1,20 @@
 name = "mnhl-me"
+account_id = "53fb41ede04e54b276ce3fd9bfd270b6"
+workers_dev = false
+preview_urls = false
 main = "src/index.ts"
 compatibility_date = "2026-03-01"
 
 # 1. KV Namespace (Cache)
 [[kv_namespaces]]
 binding = "LINKS_KV"
-id = "#" # Replace with actual KV namespace ID after creation, e.g., "1234567890abcdef1234567890abcdef"
+id = "aeaf134d52cf4789a6cc3bfe03ad54d4"
 
 # 2. D1 Database (Storage)
 [[d1_databases]]
 binding = "DB"
 database_name = "mnhl_shorteener"
-database_id = "#" # Replace with actual D1 database ID after creation, e.g., "66bb3cad-28e0-4e74-b3e8-98e938cefea0"
+database_id = "66bb3cad-28e0-4e74-b3e8-98e938cefea0"
 
 # 3. Queue (Analytics Buffer)
 [[queues.producers]]
@@ -22,6 +25,12 @@ binding = "ANALYTICS_QUEUE"
 queue = "link-analytics"
 max_batch_size = 50 # Write to DB in batches of 50
 max_batch_timeout = 5 # Or every 5 seconds
+max_retries = 3
+
+[[routes]]
+pattern = "mnhl.me"
+zone_name = "mnhl.me"
+custom_domain = true
 
 [observability]
 enabled = false

@@ -81,15 +81,17 @@ export const hmacAuthMiddleware = async (c: AppContext, next: AppNext) => {
     : await c.req.text();
 
   const url = new URL(c.req.url);
-  const expectedSignature = await computeHmac(
-    c.env.HMAC_SECRET,
-    timestamp,
-    c.req.method,
-    url.pathname + url.search,
-    body,
-  );
-
-  if (!timingSafeEqual(signature, expectedSignature)) {
+  if (typeof c.env.HMAC_SECRET !== "string" || !c.env.HMAC_SECRET.trim()) {
+    return c.json({ error: "Authentication is not configured" }, 401);
+  }
+  const secrets = [c.env.HMAC_SECRET];
+  if (typeof c.env.HMAC_PREVIOUS_SECRET === "string" && c.env.HMAC_PREVIOUS_SECRET.trim()) {
+    secrets.push(c.env.HMAC_PREVIOUS_SECRET);
+  }
+  const expectedSignatures = await Promise.all(secrets.map(secret => computeHmac(
+    secret, timestamp, c.req.method, url.pathname + url.search, body,
+  )));
+  if (!expectedSignatures.map(expected => timingSafeEqual(signature, expected)).some(Boolean)) {
     return c.json({ error: "Invalid signature" }, 401);
   }
 
